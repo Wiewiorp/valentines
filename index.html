@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fbe0e6;
+            font-family: 'Arial', sans-serif;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden; 
+        }
+
+        .container {
+            position: relative;
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .gif-container img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+            font-weight: bold;
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            font-weight: bold;
+        }
+
+        #success-message {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="question-screen">
+        <div class="gif-container">
+            <img id="mainGif" src="https://media1.tenor.com/m/BxibqUT9-I0AAAAd/dudu-flower.gif" alt="Cute Bear Asking">
+        </div>
+        
+        <h1 id="questionText">Will you be my Valentine?</h1>
+        
+        <div class="buttons">
+            <button class="btn" id="yesBtn" onclick="sayYes()">Yes</button>
+            <button class="btn" id="noBtn" onclick="argue()">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="success-message">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/q_zo_A3taR0AAAAj/tkthao219-bubududu.gif" alt="Cute Bear Hug">
+        </div>
+        <h1>YAY! I knew you would say yes! ❤️</h1>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainGif = document.getElementById('mainGif');
+        
+        // Arrays for Text and Images
+        // These work in pairs. 
+        // Click 1 shows phrases[0] and images[0], Click 2 shows phrases[1] and images[1], etc.
+        
+        const phrases = [
+            "No",
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "Surely not?",
+            "You might regret this!",
+            "Give it another thought!",
+            "Are you absolutely certain?",
+            "This could be a mistake!",
+            "Have a heart!",
+            "Don't be so cold!",
+            "Change of heart?",
+            "I wouldn't say no!",
+            "What about the chocolates?",
+            "PLEASE POOKIE",
+            "But I love you!",
+            "I am going to die",
+            "Yep i'm dead",
+            "ok ur talking to a ghost",
+            "please babe",
+            ":("
+        ];
+
+        const images = [
+            "https://media.tenor.com/ivKWdfdbV3EAAAAi/bear-sad.gif",          // 1. Shocked/Sad
+            "https://media.tenor.com/sWXhCC4A2woAAAAi/bubu-bubu-dudu.gif",    // 2. Crying
+            "https://media.tenor.com/uzTknCqPVBgAAAAi/tooji-bubududu.gif",   // 3. Very sad
+            "https://media.tenor.com/X0Wj8BSnOW8AAAAi/mocha-crying.gif", // 4. Crying loud
+            "https://media.tenor.com/AJoj_bRn1j8AAAAi/you-are-a-pig-hmmm.gif",     // 5. Heartbroken
+            "https://media.tenor.com/Q9VuGIKQqEMAAAAi/love-bear.gif"    // 6. Defeated
+        ];
+
+        function argue() {
+            // 1. Change text on the No button
+            if (noClickCount < phrases.length) {
+                noBtn.innerHTML = phrases[noClickCount];
+            } else {
+                noBtn.innerHTML = phrases[phrases.length - 1];
+            }
+
+            // 2. Change the Image
+            if (noClickCount < images.length) {
+                mainGif.src = images[noClickCount];
+            } else {
+                // Keep showing the last image if we run out of new ones
+                mainGif.src = images[images.length - 1]; 
+            }
+
+            // 3. Make the Yes button grow
+            const currentSize = window.getComputedStyle(yesBtn).fontSize;
+            const newSize = parseFloat(currentSize) * 1.4; 
+            yesBtn.style.fontSize = newSize + 'px';
+            
+            const currentPadding = window.getComputedStyle(yesBtn).padding;
+            const newPadding = parseFloat(currentPadding) * 1.2;
+            yesBtn.style.padding = newPadding + 'px';
+
+            noClickCount++;
+        }
+
+        function sayYes() {
+            document.getElementById('question-screen').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
